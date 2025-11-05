@@ -1,40 +1,31 @@
-import { $ } from '@wdio/globals'
-import Page from './page.js';
+import { $, browser } from '@wdio/globals'
+import inventoryPage from './inventory.page'
 
-/**
- * sub page containing specific selectors and methods for a specific page
- */
-class LoginPage extends Page {
-    /**
-     * define selectors using getter methods
-     */
-    get inputUsername () {
-        return $('#username');
+class LoginPage {
+    // ---------- ELEMENT GETTTERS ---------- //
+    get inputUsername() {
+        return $('#user-name')
     }
 
-    get inputPassword () {
-        return $('#password');
+    get inputPassword() {
+        return $('#password')
     }
 
-    get btnSubmit () {
-        return $('button[type="submit"]');
+    get btnSubmit() {
+        return $('input[type="submit"]')
     }
 
-    /**
-     * a method to encapsule automation code to interact with the page
-     * e.g. to login using username and password
-     */
-    async login (username, password) {
-        await this.inputUsername.setValue(username);
-        await this.inputPassword.setValue(password);
-        await this.btnSubmit.click();
+    // ---------- METHODS ---------- //
+    open() {
+        return browser.url('https://www.saucedemo.com/inventory.html')
     }
 
-    /**
-     * overwrite specific options to adapt it to page object
-     */
-    open () {
-        return super.open('login');
+    async login(username = 'standard_user', password = 'secret_sauce') {
+        this.open()
+        await this.inputUsername.setValue(username)
+        await this.inputPassword.setValue(password)
+        await this.btnSubmit.click()
+        await expect(inventoryPage.appLogo).toBeExisting()
     }
 }
 
