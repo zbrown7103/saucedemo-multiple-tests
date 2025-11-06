@@ -1,17 +1,26 @@
 class InventoryPage {
-    // ---------- ELEMENT GETTTERS ---------- //
-    get appLogo() {
-        return $('.app_logo')
-    }
+  // ---------- ELEMENT GETTERS ---------- //
+  get appLogo() {
+    return $(".app_logo");
+  }
 
-    get btnHamburgerMenu() {
-        return $('#react-burger-menu-btn')
-    }
+  get btnAddBackpackToCart() {
+    return $('[data-test="add-to-cart-sauce-labs-backpack"]');
+  }
 
-    // ---------- METHODS ---------- //
-    async openMenu() {
-        await this.btnHamburgerMenu.click()
-    }
+  get shoppingCartBadge() {
+    return $('[data-test="shopping-cart-badge"]');
+  }
+
+  get shoppingCartIconLink() {
+    return $('[data-test="shopping-cart-link"]');
+  }
+
+  // ---------- METHODS ---------- //
+  async verifyShoppingCartBadgeNumber(expectedNumber) {
+    const badgeText = await this.shoppingCartBadge.getText();
+    expect(badgeText).toBe(expectedNumber);
+  }
 }
 
 export default new InventoryPage();
